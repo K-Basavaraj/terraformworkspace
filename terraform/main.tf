@@ -6,10 +6,10 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = ""
-    storage_account_name = ""
-    container_name       = ""
-    key                  = ""
+    resource_group_name  = "labresgrp1"
+    storage_account_name = "stgaccstate101"
+    container_name       = "statefilecotainer"
+    key                  = "devfile.tfstate"
   }
 }
 
