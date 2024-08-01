@@ -2,9 +2,9 @@ name: 'terraform-deploy'
 
 on:
   push:
-    branches: 
-      - main 
-  pull_request:
+    # branches: 
+      #- main 
+  #pull_request:
 
 env:
   ARM_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
