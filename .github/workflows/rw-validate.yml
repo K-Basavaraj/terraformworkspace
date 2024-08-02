@@ -7,6 +7,14 @@ on:
         description: 'Specify the path of the root Terraform module'
         required: true
         type: string
+      user:
+        description: 'Specify the GitHub user for auth with modules'
+        required: true
+        type: string
+      organisation:
+        description: 'Specify the GitHub organisation'
+        required: true
+        type: string
 
 jobs:
   code_validation:
