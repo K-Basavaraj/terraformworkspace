@@ -7,22 +7,23 @@ on:
         description: 'specify the path of the root terraform module'
         required: true
         type: string
-      arm_client_id:
-        description: 'Azure AD Client ID'
-        required: true
-        type: string
-      arm_client_secret:
-        description: 'Azure AD Client Secret'
-        required: true
-        type: string
-      arm_tenant_id:
-        description: 'Azure AD Tenant ID'
-        required: true
-        type: string
-      arm_subscription_id:
-        description: 'Azure Subscription ID'
-        required: true
-        type: string
+      secrets:
+        arm_client_id:
+          description: 'Azure AD Client ID'
+          required: true
+          type: string
+        arm_client_secret:
+          description: 'Azure AD Client Secret'
+          required: true
+          type: string
+        arm_tenant_id:
+          description: 'Azure AD Tenant ID'
+          required: true
+          type: string
+        arm_subscription_id:
+          description: 'Azure Subscription ID'
+          required: true
+          type: string
 
 jobs:
   code_validation:
