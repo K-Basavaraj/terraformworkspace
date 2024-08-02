@@ -4,51 +4,49 @@ on:
   workflow_call:
     inputs:
       path:
-        description: 'specify the path of the root terraform module'
+        description: 'Specify the path of the root Terraform module'
         required: true
         type: string
-      secrets:
-        arm_client_id:
-          description: 'Azure AD Client ID'
-          required: true
-          type: string
-        arm_client_secret:
-          description: 'Azure AD Client Secret'
-          required: true
-          type: string
-        arm_tenant_id:
-          description: 'Azure AD Tenant ID'
-          required: true
-          type: string
-        arm_subscription_id:
-          description: 'Azure Subscription ID'
-          required: true
-          type: string
+      arm_client_id:
+        description: 'Azure AD Client ID'
+        required: true
+        type: string
+      arm_client_secret:
+        description: 'Azure AD Client Secret'
+        required: true
+        type: string
+      arm_tenant_id:
+        description: 'Azure AD Tenant ID'
+        required: true
+        type: string
+      arm_subscription_id:
+        description: 'Azure Subscription ID'
+        required: true
+        type: string
 
 jobs:
   code_validation:
     runs-on: ubuntu-latest
-    defaults:
-        run:
-          shell: bash
-          working-directory: ${{ inputs.path }}
-        
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform Init
+      - name: Terraform Init (No Backend)
         run: terraform init -backend=false
         working-directory: ${{ inputs.path }}
-      
+        env:
+          ARM_CLIENT_ID: ${{ inputs.arm_client_id }}
+          ARM_CLIENT_SECRET: ${{ inputs.arm_client_secret }}
+          ARM_TENANT_ID: ${{ inputs.arm_tenant_id }}
+          ARM_SUBSCRIPTION_ID: ${{ inputs.arm_subscription_id }}
+
       - name: Terraform Format
         run: terraform fmt --check
         working-directory: ${{ inputs.path }}
-      
+
       - name: Terraform Validate
         run: terraform validate
         working-directory: ${{ inputs.path }}
