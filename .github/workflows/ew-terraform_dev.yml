@@ -10,7 +10,7 @@ on:
 
 jobs:
   validate:
-    uses: .github/workflows/rw-validate.yml@main
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-validate.yml@main
     with:
       path: terraform_dev
     secrets:
