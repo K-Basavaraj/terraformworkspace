@@ -1,2 +1,2 @@
-resource_groups = ["mytestrg101", "mytestrgp102"]
+resource_groups = ["mytestrg101"]
 location        = "South India"
