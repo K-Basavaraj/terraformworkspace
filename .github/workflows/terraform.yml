@@ -1,7 +1,7 @@
 name: 'terraform-deploy'
 
-on:
-  push:
+# on:
+  # push:
     # branches: 
       #- main 
   #pull_request:
