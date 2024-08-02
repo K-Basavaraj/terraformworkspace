@@ -10,7 +10,7 @@ on:
 
 jobs:
   validate:
-    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-validate.yml@main
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-validate.yml@featurebranch3-adding-ewfile
     with:
       path: terraform_dev
     secrets:
