@@ -85,7 +85,7 @@ jobs:
          ARM_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
       
       - name: Terraform apply
-        run: terraform apply --var-file=tfvars/$TF_VARS --out=plan.tfplan
+        run: terraform apply --var-file=tfvars/$TF_VARS -auto-approve
         env:
          ARM_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
          ARM_CLIENT_SECRET: ${{secrets.AZURE_AD_CLIENT_SECRET}}
