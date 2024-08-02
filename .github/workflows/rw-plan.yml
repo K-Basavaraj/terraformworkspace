@@ -84,7 +84,7 @@ jobs:
          ARM_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
 
       - name: Terraform plan
-        run: terrraform plan --var-file=tfvars/$TF_VARS --out=plan.tfplan
+        run: terraform plan --var-file=tfvars/$TF_VARS --out=plan.tfplan
         continue-on-error: true
         env:
          ARM_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
