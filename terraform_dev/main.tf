@@ -18,3 +18,4 @@ module "resource_group" {
   resource_group_name = each.key
   location            = var.location
 }
+
