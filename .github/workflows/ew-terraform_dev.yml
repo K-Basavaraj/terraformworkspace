@@ -13,8 +13,8 @@ jobs:
     uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-validate.yml@featurebranch3-adding-ewfile
     with:
       path: terraform_dev
-    secrets:
       arm_client_id: ${{secrets.AZURE_AD_CLIENT_ID}}
       arm_client_secret: ${{secrets.AZURE_AD_CLIENT_SECRET}}
       arm_subscription_id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
       arm_tenant_id: ${{secrets.AZURE_AD_TENANT_ID}}
+    
