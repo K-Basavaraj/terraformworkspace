@@ -32,19 +32,19 @@ on:
       required: true
       type: string
     
-    secrets:
-      AZURE_AD_CLIENT_ID:
-        description: "specify client id"
-        required: true
-      AZURE_AD_CLIENT_SECRET:
-        description: "specify client secret"
-        required: true
-      AZURE_SUBSCRIPTION_ID:
-        description: "specify sub id"
-        required: true
-      AZURE_AD_TENANT_ID: 
-        description: "specify tenant id"
-        required: true
+  secrets:
+    AZURE_AD_CLIENT_ID:
+      description: "specify client id"
+      required: true
+    AZURE_AD_CLIENT_SECRET:
+      description: "specify client secret"
+      required: true
+    AZURE_SUBSCRIPTION_ID:
+      description: "specify sub id"
+      required: true
+    AZURE_AD_TENANT_ID: 
+      description: "specify tenant id"
+      required: true
 
 jobs:
   Terraform_plan:
