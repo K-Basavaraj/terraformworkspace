@@ -10,12 +10,12 @@ on:
 
 jobs:
   validate:
-    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-validate.yml@featurebranch3-adding-ewfile
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-validate.yml@main
     with:
       path: terraform_dev
-  
+
   plan:
-    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-plan.yml@featurebranch3-adding-ewfile
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-plan.yml@main
     needs: [validate]
     with:
       path: terraform_dev
