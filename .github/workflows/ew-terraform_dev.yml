@@ -9,14 +9,14 @@ on:
       - "terraform_dev/**"
 
 jobs:
-  _01:
+  validate:
     uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-validate.yml@featurebranch3-adding-ewfile
     with:
       path: terraform_dev
   
-  _02:
-    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-validate.yml@featurebranch3-adding-ewfile
-    needs: [_01]
+  plan:
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-plan.yml@featurebranch3-adding-ewfile
+    needs: [validate]
     with:
       path: terraform_dev
       tf_version: latest
