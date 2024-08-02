@@ -9,7 +9,24 @@ on:
       - "terraform_dev/**"
 
 jobs:
-  validate:
+  _01:
     uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-validate.yml@featurebranch3-adding-ewfile
     with:
       path: terraform_dev
+  
+  _02:
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-validate.yml@featurebranch3-adding-ewfile
+    needs: [_01]
+    with:
+      path: terraform_dev
+      tf_version: latest
+      az_resource_group: labresgrp1
+      az_storage_account: stgaccstate101
+      az_container_name: devcontainer
+      tf_key: dev
+      tf_vars_file: dev.tfvars
+    secrets:
+      ARM_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.AZURE_AD_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
