@@ -1,4 +1,4 @@
-name: "rw-validate"
+name: "rw-terraform-validate"
 
 on:
   workflow_call:
