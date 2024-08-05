@@ -5,3 +5,10 @@ variable "resource_groups" {
 variable "location" {
   type = string
 }
+
+variable "virtual_network" {
+  type = list(object({
+    name          = string
+    address_space = list(string)
+  }))
+}

@@ -19,3 +19,14 @@ module "resource_group" {
   location            = var.location
 }
 
+module "vnet" {
+  source              = "../terraform_module/virtual_network"
+  for_each            = { for vnet in var.virtual_network : vnet.name => vnet }
+  name                = each.value.name
+  resource_group_name = module.resource_group["mytestrg101"].name
+  location            = module.resource_group["mytestrg101"].location
+  address_space       = each.value.address_space
+  depends_on = [
+    module.resource_group
+  ]
+}
