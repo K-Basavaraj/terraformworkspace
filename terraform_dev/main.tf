@@ -5,7 +5,7 @@ terraform {
       version = "3.113.0"
     }
   }
-  backend "azurerm" {}
+  #backend "azurerm" {}
 }
 
 provider "azurerm" {
@@ -19,3 +19,11 @@ module "resource_group" {
   location            = var.location
 }
 
+module "vnet" {
+  source              = "../terraform_module/virtual_network"
+  for_each            = { for vnet in var.virtual_network : vnet.name => vnet }
+  name                = each.value.name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = module.resource_group.location
+  address_space       = each.value.address_space
+}
