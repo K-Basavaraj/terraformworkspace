@@ -30,3 +30,16 @@ module "vnet" {
     module.resource_group
   ]
 }
+
+module "subnet" {
+  for_each             = { for snet in var.subnet : snet.name => snet }
+  source               = "../terraform_module/subnet"
+  name                 = each.value.name
+  resource_group_name  = module.resource_group["mytestrg101"].name
+  virtual_network_name = module.vnet["vnet1"].vnet_name
+  address_prefixes     = each.value.address_prefixes
+  #delegation           = each.value.delegation
+  depends_on = [
+    module.vnet
+  ]
+}

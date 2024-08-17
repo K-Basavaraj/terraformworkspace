@@ -12,3 +12,14 @@ variable "virtual_network" {
     address_space = list(string)
   }))
 }
+
+variable "subnet" {
+  type = list(object({
+    name             = string
+    address_prefixes = list(string)
+    # delegation = list(object({
+    #   service_name = string
+    #   actions      = list(string)
+    # }))
+  }))
+}
