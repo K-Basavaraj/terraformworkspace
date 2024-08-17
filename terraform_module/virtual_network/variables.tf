@@ -32,8 +32,24 @@ variable "ddos_protection_plan" {
   default = []
 }
 
+variable "encryption" {
+  type = list(object({
+    enforcement = string
+  }))
+  default = []
+}
+
+variable "subnet" {
+  type = list(object({
+    name           = string
+    address_prefix = string
+    security_group = string
+  }))
+  default = null
+}
+
 variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the resources."
-  default = {}
+  default     = {}
 }
