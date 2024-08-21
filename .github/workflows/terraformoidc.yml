@@ -16,7 +16,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Azure CLI commands
-        uses: azure/CLI@v1
+        uses: azure/cli@v1
         with:
          azcliversion: latest
          inlinescript: |
