@@ -1,0 +1,89 @@
+About authenticate and authorize 
+------------------------------------------------------------------------------------------------------------------------------
+==> Authentication is the process of verifying the identity of a user. It answers the question "Who are you?"
+
+==> Authorization is the process of determining what a user is allowed to do. It answers the question "What can you do?"
+In summary:
+Authentication is about verifying your identity.
+Authorization is about granting you access to specific resources or actions.
+--------------------------------------------------------------------------------------------------------------------------------
+
+service principal:
+---------------------------------------------------------------------------------------------------------------------------------
+A service principal is a security identity used by applications to authenticate and authorize access to Azure resources. 
+It's like a user account for an application.
+
+Key points:
+Application identity: Represents an application.
+Authentication: Used to authenticate the application with Azure.
+Authorization: Determines what the application can do in Azure.
+Permissions: Assigned specific permissions to access resources (e.g., read, write, delete).
+
+How it works:
+Create a service principal: Assign a name and description.
+Assign permissions: Grant the service principal necessary permissions.
+Use the service principal: In your application, use the service principal's credentials to authenticate and access Azure resources.
+
+Example:
+A Terraform script needs to manage Azure resources.
+A service principal is created in Azure.
+The service principal is granted permissions to manage Azure resources.
+GitHub Actions use the service principal’s credentials to apply Terraform scripts and manage resources in Azure.
+
+Drawbacks of Service Principals:
+==> security Risks: Handling and securing service principal secrets can be tricky and prone to security issues.
+==> Complexity: Setting up and managing service principals can be complicated and time-consuming.
+==> Limited Flexibility: Service principals are often restricted to specific applications, limiting their versatility.
+   If you try to use the same service principal for different applications or purposes, you might face issues because the permissions are too specialized or not adaptable.
+==> Expiration: Service principal credentials can expire, necessitating regular renewal.
+
+The Rise of OIDC
+To overcome these issues, OpenID Connect (OIDC) was introduced. OIDC provides a more secure, user-friendly, and flexible way to handle authentication, addressing many of the limitations of service principals.
+========================================================================================================================================
+                                                OIDC (Open ID Connect)
+=======================================================================================================================================
+OpenID Connect (OIDC) allows applications to use short-lived, temporary tokens for accessing resources and verifying identities. This method avoids the risks associated with managing long-term static credentials, improving security by using tokens that expire and are replaced regularly.
+                               (or)
+OIDC is an authentication protocol that is based on OAuth 2.2( framework for authorization, allowing applications to access user resources without needing to handle user passwords.) This enables developers and IT pro to connect thier applications with clouds and systems using a secure [password-less] authentication.
+It provides a way to obtain short-lived access [tokens] and verify identities without the need for managing static credentials.
+
+Use Case in GitHub Actions:
+Purpose: GitHub Actions workflows often need to interact with cloud providers (like AWS, Azure, GCP, or HashiCorp Vault) to deploy software or use cloud services.
+Traditional Method: Typically, workflows use hardcoded credentials (like passwords or tokens) stored as secrets in GitHub. These credentials are manually created and managed in both GitHub and the cloud provider.
+
+With OpenID Connect (OIDC), you can take a differnt approch to get temporary access tokens directly from your cloud provider, instead of using static credentials. 
+-->Your cloud provider must support OIDC, and you need to 
+--> set up a trust relationship to control which workflows can request these tokens. 
+-->Major providers like AWS, Azure, Google Cloud, and HashiCorp Vault support OIDC.
+
+Advantages of Using OIDC:
+
+Secure Authentication:
+    Token-Based Access: Instead of managing long-lived secrets, OIDC allows workflows to request short-lived access tokens from the  cloud provider. This enhances security by reducing the risk of credential leakage.
+
+Simplified Credential Management:
+    No Hardcoded Secrets: OIDC eliminates the need to hardcode and duplicate secrets between GitHub and the cloud provider. Instead, workflows dynamically obtain access tokens.
+
+Trusted Relationships:
+    Trust Configuration: You configure a trust relationship between GitHub Actions and the cloud provider. This setup ensures that only authorized workflows can request access tokens, enhancing security and control.
+
+Provider Support:
+    Broad Compatibility: Major cloud providers, including Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), and HashiCorp Vault, support OIDC. This makes it a versatile solution for modern DevOps practices.
+
+Workflow Details
+GitHub Actions automates software development tasks like CI/CD directly from your GitHub repository. When using GitHub Actions with Microsoft Azure, OpenID Connect (OIDC) makes it easier and more secure to deploy.
+
+Request Token:
+Each time you deploy, GitHub Actions requests a special OpenID Connect token. This token helps verify the identity of the workflow.
+
+Validation:
+GitHub Actions uses the token to authenticate with Azure. Azure checks the token to ensure it’s valid and matches the required permissions.
+
+Access Token:
+If the token is valid, Azure provides a short-lived access token. GitHub Actions uses this token to deploy and interact with Azure.
+
+Token Expiry:
+The access token expires once the deployment is done and the workflow job is complete.
+
+In summary, OIDC streamlines and secures the process of deploying from GitHub Actions to Azure by using temporary tokens for authentication.
+=====================================================================================================================================
