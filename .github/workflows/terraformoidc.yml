@@ -29,8 +29,6 @@ jobs:
       
      - name: Azure login
        uses: azure/login@v1
-       env:
-        ARM_USE_OIDC: true
 
      - name: Setup Terraform
        uses: hashicorp/setup-terraform@v2
@@ -38,6 +36,8 @@ jobs:
      - name: Terraform Init
        run: terraform init
        working-directory: ${{env.ROOT_PATH}}
+       env:
+        ARM_USE_OIDC: true
      
      - name: Terraform Format
        run: terraform fmt
