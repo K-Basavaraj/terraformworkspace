@@ -1,15 +1,17 @@
 name: Run Azure Login with OIDC
-on: [push]
-#  push:
-#    branches:
-#     - main
-#  pull_request:
-
-  #  paths:
-  #   - 'src/**'
- #workflow_dispatch:
-  env: 
-    ROOT_PATH: '${{ github.workspace }}/src'
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'src/**'
+  workflow_dispatch:
+env: 
+  ROOT_PATH: '${{ github.workspace }}/src'
 
 jobs:
   terraform-validate:
