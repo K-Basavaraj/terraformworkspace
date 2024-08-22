@@ -7,6 +7,8 @@ on:
       - 'src/**'
   pull_request:
     types: [opened, reopened, synchronize]
+    branches:
+      - main
     paths:
       - 'src/**'
   workflow_dispatch:
