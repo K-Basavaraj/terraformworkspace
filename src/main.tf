@@ -8,7 +8,7 @@ terraform {
   backend "azurerm" {
     resource_group_name  = "labresgrp1"
     storage_account_name = "stgaccstate101"
-    container_name       = "statefilecotainer"
+    container_name       = "devcontainer"
     key                  = "devfile.tfstate"
   }
 }
