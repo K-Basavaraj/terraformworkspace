@@ -15,9 +15,6 @@ jobs:
   terraform-validate:
     runs-on: ubuntu-latest
     environment: dev
-    defaults:
-      run:
-       shell: bash
    
     permissions:
       id-token: write     #permission grants the GitHub Actions workflow the capability to request an OIDC token from GitHub. This token is used for authentication with external services.
