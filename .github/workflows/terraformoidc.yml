@@ -55,34 +55,34 @@ jobs:
        working-directory: ${{env.ROOT_PATH}}
        env:
         ARM_USE_OIDC: true
-      
-     - name: Terraform apply
-       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-       run: terraform apply --auto-approve 
-       working-directory: ${{env.ROOT_PATH}}
 
-  # terraform-deploy:
-  #    name: terraform-plan
-  #    runs-on: ubuntu-latest
-  #    needs: [terraform-validate]
-  #    environment: dev
+  terraform-deploy:
+     runs-on: ubuntu-latest
+     needs: [terraform-validate]
+     environment: dev
 
-  #    permissions:
-  #     id-token: write     
-  #     contents: read
+     permissions:
+      id-token: write     
+      contents: read
             
-  #    steps:
-  #      - name: Checkout
-  #        uses: actions/checkout@v4
+     steps:
+       - name: Checkout
+         uses: actions/checkout@v4
       
-  #      - name: Terraform Init
-  #        run: terraform init -reconfigure
-  #        working-directory: ${{env.ROOT_PATH}}
+       - name: Terraform Init
+         run: terraform init -reconfigure
+         working-directory: ${{env.ROOT_PATH}}
+         env:
+          ARM_USE_OIDC: true
   
-  #      - name: Terraform Plan
-  #        run: terraform plan 
-  #        working-directory: ${{env.ROOT_PATH}}
+       - name: Terraform Plan
+         run: terraform plan 
+         working-directory: ${{env.ROOT_PATH}}
+         env:
+          ARM_USE_OIDC: true
 
-  #      - name: Terraform apply
-  #        run: terraform apply --auto-approve 
-  #        working-directory: ${{env.ROOT_PATH}}
+       - name: Terraform apply
+         run: terraform apply --auto-approve 
+         working-directory: ${{env.ROOT_PATH}}
+         env:
+          ARM_USE_OIDC: true
