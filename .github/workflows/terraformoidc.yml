@@ -57,9 +57,10 @@ jobs:
         ARM_USE_OIDC: true
       
      - name: Terraform apply
-       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
        run: terraform apply --auto-approve 
        working-directory: ${{env.ROOT_PATH}}
+       env:
+        ARM_USE_OIDC: true
 
   # terraform-deploy:
   #    name: terraform-plan
