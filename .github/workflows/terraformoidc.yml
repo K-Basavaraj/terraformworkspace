@@ -3,9 +3,9 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
   workflow_dispatch:
 env:
   ROOT_PATH: '${{ github.workspace }}/src'
@@ -21,8 +21,8 @@ jobs:
     permissions:
       id-token: write     #permission grants the GitHub Actions workflow the capability to request an OIDC token from GitHub. This token is used for authentication with external services.
       contents: read
-      pull-requests: write
-      issues: write
+      # pull-requests: write
+      # issues: write
       
     steps:
      - name: Checkout
@@ -72,7 +72,7 @@ jobs:
   terraform_apply:
     name: terraform-deploy
     runs-on: ubuntu-latest
-    #needs: [terraform_plan]
+    needs: [terraform_plan]
     environment: dev
 
     permissions:
