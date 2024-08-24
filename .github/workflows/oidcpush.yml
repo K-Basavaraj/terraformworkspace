@@ -7,7 +7,7 @@ on:
 
 env:
   ROOT_PATH: "${{ github.workspace }}/src"
-  environment: dev
+  
 
 permissions:
       id-token: write
@@ -16,6 +16,7 @@ permissions:
 jobs: 
   terraform-deploy:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
