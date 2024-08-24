@@ -29,6 +29,13 @@ jobs:
      - name: Checkout
        uses: actions/checkout@v4
 
+     - name: Login to Azure
+       uses: azure/login@v1
+       env:
+        ARM_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
+        ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+        ARM_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
+
     #  - name: 'Azure login'
     #    uses: azure/login@v2  #search in marketplace github while adding client and tenent id nameing conevtion.
     #    with:
