@@ -16,7 +16,7 @@ env:
 
 jobs:
   terraform-validate:
-    name: terraform-plan
+    name: plan&deploy
     runs-on: ubuntu-latest
     environment: dev
    
