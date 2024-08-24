@@ -17,6 +17,7 @@ jobs:
   terraform_plan:
     name: terraform-validate
     runs-on: ubuntu-latest
+    environment: dev
    
     permissions:
       id-token: write     #permission grants the GitHub Actions workflow the capability to request an OIDC token from GitHub. This token is used for authentication with external services.
