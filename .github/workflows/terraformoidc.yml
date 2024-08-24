@@ -1,63 +1,58 @@
-# name: Run Azure Login with OIDC
-# on:
-#   push:
-#     branches:
-#       - main
-#   # pull_request:
-#   #   types: [opened, reopened, synchronize]
-#   #   branches:
-#   #     - main
-#   workflow_dispatch:
-# env:
-#   ROOT_PATH: '${{ github.workspace }}/src'
-#   ARM_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
-#   ARM_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
-#   ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+name: Run Azure Login with OIDC
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+env:
+  ROOT_PATH: '${{ github.workspace }}/src'
+  ARM_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
+  ARM_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
 
-# jobs:
-#   terraform-validate:
-#     name: plan&deploy
-#     runs-on: ubuntu-latest
-#     environment: dev
+jobs:
+  terraform-infra:
+    name: plan&deploy
+    runs-on: ubuntu-latest
+    environment: dev
    
-#     permissions:
-#       id-token: write     #permission grants the GitHub Actions workflow the capability to request an OIDC token from GitHub. This token is used for authentication with external services.
-#       contents: read
+    permissions:
+      id-token: write     #permission grants the GitHub Actions workflow the capability to request an OIDC token from GitHub. This token is used for authentication with external services.
+      contents: read
       
-#     steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-      
-#     #  - name: 'Az CLI login'
-#     #    uses: azure/login@v2
-#     #    with:
-#     #     auth-type: SERVICE_PRINCIPAL
-#     #     client-id: ${{secrets.AZURE_AD_CLIENT_ID}}
-#     #     tenant-id: ${{secrets.AZURE_AD_TENANT_ID}}
-#     #     subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+    steps:
+     - name: Checkout
+       uses: actions/checkout@v4
 
+     - name: Setup Terraform
+       uses: hashicorp/setup-terraform@v2
 
-#      - name: Setup Terraform
-#        uses: hashicorp/setup-terraform@v2
-
-#      - name: Terraform Init
-#        run: terraform init
-#        working-directory: ${{env.ROOT_PATH}}
-#        env:
-#         ARM_USE_OIDC: true
+     - name: Terraform Init
+       run: terraform init
+       working-directory: ${{env.ROOT_PATH}}
+       env:
+        ARM_USE_OIDC: true
      
-#      - name: Terraform Format
-#        run: terraform fmt
-#        working-directory: ${{env.ROOT_PATH}} 
+     - name: Terraform Format
+       run: terraform fmt
+       working-directory: ${{env.ROOT_PATH}} 
 
-#      - name: Terraform Plan
-#        run: terraform plan
-#        working-directory: ${{env.ROOT_PATH}}
-#        env:
-#         ARM_USE_OIDC: true
+     - name: Terraform Plan
+       run: terraform plan
+       working-directory: ${{env.ROOT_PATH}}
+       env:
+        ARM_USE_OIDC: true
      
-#      - name: Terraform apply
-#        run: terraform apply --auto-approve 
-#        working-directory: ${{env.ROOT_PATH}}
-#        env:
-#          ARM_USE_OIDC: true
+     - name: Terraform apply
+       run: terraform apply --auto-approve 
+       working-directory: ${{env.ROOT_PATH}}
+       env:
+         ARM_USE_OIDC: true
+
+   #  - name: 'Az CLI login'
+    #    uses: azure/login@v2
+    #    with:
+    #     auth-type: SERVICE_PRINCIPAL
+    #     client-id: ${{secrets.AZURE_AD_CLIENT_ID}}
+    #     tenant-id: ${{secrets.AZURE_AD_TENANT_ID}}
+    #     subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
