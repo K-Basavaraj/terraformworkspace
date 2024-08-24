@@ -3,7 +3,7 @@ name: OIDC Pull Request
 on:
   pull_request:
     branches:
-      - main
+    - main
 
 env:
   ROOT_PATH: "${{ github.workspace }}/src"

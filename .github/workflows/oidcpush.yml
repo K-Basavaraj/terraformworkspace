@@ -1,9 +1,9 @@
-name: Push
+name: OIDC Push
 
 on:
   push:
     branches:
-      - main
+    - main
 
 env:
   ROOT_PATH: "${{ github.workspace }}/src"
