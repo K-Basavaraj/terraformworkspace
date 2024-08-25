@@ -1,36 +1,36 @@
-name: "oidc-terraform-deploy"
-on:
- workflow_dispatch:
-    inputs:
-      Environments:
-        description: 'specify the env to be deployed'
-        required: true
-        type: choice
-        options:
-           - dev-env
-           - qa-env
-jobs:
-    validate:
-      uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-validate.yml@main
-      with:
-       path: terraform_dev
-       tf_version: latest
+# name: "oidc-terraform-deploy"
+# on:
+#  workflow_dispatch:
+#     inputs:
+#       Environments:
+#         description: 'specify the env to be deployed'
+#         required: true
+#         type: choice
+#         options:
+#            - dev-env
+#            - qa-env
+# jobs:
+#     validate:
+#       uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-validate.yml@main
+#       with:
+#        path: terraform_dev
+#        tf_version: latest
 
-    plan:
-      uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-plan.yml@main
-      needs: [validate]
-      with:
-        path: terraform_dev
-        tf_version: latest
-        az_resource_group: labresgrp1
-        az_storage_account: stgaccstate101
-        az_container_name: devcontainer
-        tf_key: ${{ inputs.Environments }}
-        tf_vars_file: ${{ inputs.Environments }}.tfvars
-        github_environment: ${{ github.event.inputs.Environments }}
-      secrets:
-        AZURE_AD_CLIENT_ID: ${{ inputs.Environments == 'dev-env' && secrets.AZURE_AD_CLIENT_ID || secrets.AZURE_AD_QA_CLIENT_ID }}
-        AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-        AZURE_AD_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
+#     plan:
+#       uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-plan.yml@main
+#       needs: [validate]
+#       with:
+#         path: terraform_dev
+#         tf_version: latest
+#         az_resource_group: labresgrp1
+#         az_storage_account: stgaccstate101
+#         az_container_name: devcontainer
+#         tf_key: ${{ inputs.Environments }}
+#         tf_vars_file: ${{ inputs.Environments }}.tfvars
+#         github_environment: ${{ github.event.inputs.Environments }}
+#       secrets:
+#         AZURE_AD_CLIENT_ID: ${{ inputs.Environments == 'dev-env' && secrets.AZURE_AD_CLIENT_ID || secrets.AZURE_AD_QA_CLIENT_ID }}
+#         AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+#         AZURE_AD_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
   
           
