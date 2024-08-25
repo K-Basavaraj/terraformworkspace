@@ -1,4 +1,4 @@
-name: "rw-terraform-apply"
+name: "rw-oidc-terraform-apply"
 
 on:
  workflow_call:
