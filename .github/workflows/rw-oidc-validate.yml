@@ -16,9 +16,6 @@ on:
       AZURE_AD_CLIENT_ID:
         description: "specify client id"
         required: false
-      AZURE_AD_QA_CLIENT_ID:
-        description: "specify qa client id"
-        required: false  
       AZURE_SUBSCRIPTION_ID:
         description: "specify sub id"
         required: true
