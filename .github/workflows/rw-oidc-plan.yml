@@ -1,0 +1,106 @@
+name: "rw-oidc-terraform-plan"
+
+on:
+ workflow_call:
+  inputs:
+    path:
+      description: 'Specify the path of the root Terraform module'
+      required: true
+      type: string
+    tf_version:
+      description: 'Specify the version of the terraform to use'
+      required: true
+      type: string
+    az_resource_group:
+      description: 'The name of the resource group'
+      required: true
+      type: string
+    az_storage_account:
+      description: 'The name of the storage account'
+      required: true
+      type: string
+    az_container_name:
+      description: 'The name of the container'
+      required: true
+      type: string
+    tf_key:
+      description: 'statefile key name'
+      required: true
+      type: string
+    tf_vars_file:
+      description: 'specify the terraform tfvars file'
+      required: true
+      type: string
+    github_environment:
+      description: 'specify the github environment'
+      required: true
+      type: string
+    
+  secrets:
+    AZURE_AD_CLIENT_ID:
+      description: "specify client id"
+      required: true
+    AZURE_SUBSCRIPTION_ID:
+      description: "specify sub id"
+      required: true
+    AZURE_AD_TENANT_ID: 
+      description: "specify tenant id"
+      required: true
+
+jobs:
+  Terraform_plan:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.github_environment}}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{inputs.path}}
+    permissions:
+      id-token: write     #permission grants the GitHub Actions workflow the capability to request an OIDC token from GitHub. This token is used for authentication with external services.
+      contents: read
+      pull-requests: write
+      issues: write
+
+    env:
+      ARM_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
+
+      STORAGE_ACCOUNT_NAME: ${{inputs.az_storage_account}}
+      CONTAINER_NAME: ${{ inputs.az_container_name}}
+      RESOURCE_GROUP_NAME: ${{inputs.az_resource_group}}
+      TF_key: ${{inputs.tf_key}}
+      TF_VARS: ${{inputs.tf_vars_file}}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ inputs.tf_version }}
+
+      - name: Terraform Init 
+        run: terraform init --backend-config="storage_account_name=$STORAGE_ACCOUNT_NAME" --backend-config="container_name=$CONTAINER_NAME" --backend-config="resource_group_name=$RESOURCE_GROUP_NAME" --backend-config="key=$TF_key.tfstate" 
+        env:
+          ARM_USE_OIDC: true
+
+      - name: Terraform plan
+        run: terraform plan --var-file=tfvars/$TF_VARS --out=plan.tfplan
+        continue-on-error: true
+        env:
+          ARM_USE_OIDC: true
+    
+      - name: Terraform plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+      
+      - name: upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: "${{ inputs.tf_key }}"
+          path: "${{inputs.path}}/plan.tfplan"
+          retention-days: 5
+    
+     
