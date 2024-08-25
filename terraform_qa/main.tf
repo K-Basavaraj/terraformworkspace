@@ -5,12 +5,7 @@ terraform {
       version = "3.113.0"
     }
   }
-  backend "azurerm" {
-    resource_group_name  = "labresgrp1"
-    storage_account_name = "stgaccstate101"
-    container_name       = "statefilecotainer"
-    key                  = "devfile.tfstate"
-  }
+  backend "azurerm" {}
 }
 
 provider "azurerm" {
