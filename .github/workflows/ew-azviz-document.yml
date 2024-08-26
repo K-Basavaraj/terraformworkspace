@@ -27,29 +27,29 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       AZURE_AD_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
 
- stage-2-copy-artifact:
-  needs: stage-1-Documentation
-  runs-on: ubuntu-latest
-  steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: az-viz  
+#  stage-2-copy-artifact:
+#   needs: stage-1-Documentation
+#   runs-on: ubuntu-latest
+#   steps:
+#     - name: Download artifact
+#       uses: actions/download-artifact@v3
+#       with:
+#         name: az-viz  
 
-    - name: Verify downloaded files
-      run: ls -alh /home/runner/work/terraformworkspace/terraformworkspace  # Check where the artifact is downloaded
+    # - name: Verify downloaded files
+    #   run: ls -alh /home/runner/work/terraformworkspace/terraformworkspace  # Check where the artifact is downloaded
 
-    - name: Ensure src directory exists
-      run: mkdir -p src  # Create the src directory if it doesn't exist
+    # - name: Ensure src directory exists
+    #   run: mkdir -p src  # Create the src directory if it doesn't exist
 
-    - name: Copy file to src folder
-      run: |
-        cp /home/runner/work/terraformworkspace/terraformworkspace/output.png src/output.png  # Ensure the correct path
+    # - name: Copy file to src folder
+    #   run: |
+    #     cp /home/runner/work/terraformworkspace/terraformworkspace/output.png src/output.png  # Ensure the correct path
 
-    - name: Commit and push generated documentation
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add src/output.png
-        git commit -m "Added AzViz documentation for resource group(s): mytestrg101"
-        git push
+    # - name: Commit and push generated documentation
+    #   run: |
+    #     git config user.name "GitHub Actions"
+    #     git config user.email "actions@github.com"
+    #     git add src/output.png
+    #     git commit -m "Added AzViz documentation for resource group(s): mytestrg101"
+    #     git push
