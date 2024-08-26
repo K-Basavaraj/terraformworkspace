@@ -1,0 +1,94 @@
+name: 'rw-azviz-document'
+on:
+ workflow_call:
+    inputs:
+     resource_groups:
+      description: 'lsit of resource group document'
+      type: string
+      required: true
+     source_file:
+        description: 'Source file to be processed'
+        type: string
+        required: true
+     destination_repo:
+       description: 'Destination repository where the document will be committed'
+       type: string
+       required: false
+     destination_folder:
+       description: 'Folder in the destination repository where the document will be placed'
+       type: string
+       required: true
+     github_environment:
+       description: 'The GitHub environment (e.g., dev, qa) to be used'
+       type: string
+       required: true
+    secrets:
+     AZURE_AD_CLIENT_ID:
+       description: "specify client id"
+       required: true
+     AZURE_SUBSCRIPTION_ID:
+       description: "specify sub id"
+       required: true
+     AZURE_AD_TENANT_ID: 
+       description: "specify tenant id"
+       required: true
+
+jobs:
+  azviz_docs:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+         shell: bash
+        
+    steps:
+     - name: steup Graphviz
+       run: sudo apt get install -y graphviz
+
+     - name: Configure AzViz
+       run: |
+        Install-Module -Name AzViz -Scope CurrentUser -Repository PSGallery -Force
+        Import-Module AzViz -Verbose
+       shell: pwsh
+       
+     - name: Azure login
+       uses: azure/login@v2
+       with:
+        client-id: ${{ secrets.AZURE_AD_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        enable-AzPSSession: true
+
+     - name: Azure Powershell Action
+       uses: Azure/powershell@v2
+       with:
+        inlineScript: |
+          Export-AzViz -ResourceGroup ${{ inputs.resource_groups }} -LabelVerbosity 2 -CategoryDepth 2 -Theme light -Show -OutputFormat png 
+        azPSVersion: latest
+
+     - name: Commit and push generated documentation
+       run: |
+          mkdir -p ${{ inputs.destination_folder }}
+          cp ./${{ inputs.resource_groups }}.png ${{ inputs.destination_folder }}
+          git add .
+          git commit -m "Added AzViz documentation for resource group(s): ${{ inputs.resource_groups }}"
+          git push
+          
+     - name: Notify completion
+       run: |
+         echo "AzViz documentation generated and pushed to the current repository for environment: ${{ inputs.github_environment }}"
+        
+     
+
+         
+# - name: Commit and push generated documentation
+#   run: |
+#     git clone https://github.com/${{ inputs.destination_repo }}.git
+#     mkdir -p ${{ inputs.destination_repo }}/{{ inputs.destination_folder }}
+#     cp ./${{ inputs.resource_groups }}.png ${{ inputs.destination_repo }}/{{ inputs.destination_folder }}
+#     cd ${{ inputs.destination_repo }}
+#     git add .
+#     git commit -m "Added AzViz documentation for resource group(s): ${{ inputs.resource_groups }}"
+#     git push   
+#     - name: Notify completion
+#     run: |
+#       echo "AzViz documentation generated and pushed to ${ { inputs.destination_repo } } for environment: ${ { inputs.github_environment } }"
