@@ -42,7 +42,7 @@ jobs:
         
     steps:
      - name: steup Graphviz
-       run: sudo apt-get install -y graphviz
+       run: sudo apt get install -y graphviz
 
      - name: Configure AzViz
        run: |
