@@ -20,7 +20,7 @@ jobs:
     with:
      resource_groups: mytestrg101
      github_environment: dev
-     source_file: "output/mytestrg101.png"
+     source_file: "./mytestrg101.png"
      destination_folder: "src"
     secrets:
       AZURE_AD_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
