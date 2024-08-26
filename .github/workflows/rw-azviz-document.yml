@@ -6,22 +6,22 @@ on:
       description: 'lsit of resource group document'
       type: string
       required: true
-     source_file:
-        description: 'Source file to be processed'
-        type: string
-        required: true
-     destination_repo:
-       description: 'Destination repository where the document will be committed'
-       type: string
-       required: false
-     destination_folder:
-       description: 'Folder in the destination repository where the document will be placed'
-       type: string
-       required: true
      github_environment:
-       description: 'The GitHub environment (e.g., dev, qa) to be used'
-       type: string
-       required: true
+      description: 'The GitHub environment (e.g., dev, qa) to be used'
+      type: string
+      required: true
+    #  source_file:
+    #     description: 'Source file to be processed'
+    #     type: string
+    #     required: true
+    #  destination_repo:
+    #    description: 'Destination repository where the document will be committed'
+    #    type: string
+    #    required: false
+    #  destination_folder:
+    #    description: 'Folder in the destination repository where the document will be placed'
+    #    type: string
+    #    required: true
     secrets:
      AZURE_AD_CLIENT_ID:
        description: "specify client id"
