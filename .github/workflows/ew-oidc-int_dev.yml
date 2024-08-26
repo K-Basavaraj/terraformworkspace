@@ -10,7 +10,7 @@ on:
 
 jobs:
   validate:
-    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-validate.yml@main
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-validate.yml@feature-branch-27
     with:
       path: terraform_dev
     secrets:
