@@ -15,9 +15,10 @@ jobs:
       path: terraform_dev
       tf_version: latest
     secrets:
-      client-id: ${{secrets.AZURE_AD_CLIENT_ID}}
-      tenant-id: ${{secrets.AZURE_AD_TENANT_ID}}
-      subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      AZURE_AD_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
+      AZURE_AD_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
+      AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+    
 
 
 #   plan:
