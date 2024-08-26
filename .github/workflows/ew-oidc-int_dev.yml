@@ -24,21 +24,19 @@ jobs:
       AZURE_AD_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
       AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
     
-
-
-#   plan:
-#     uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-plan.yml@main
-#     needs: [validate]
-#     with:
-#       path: terraform_dev
-#       tf_version: latest
-#       az_resource_group: labresgrp1
-#       az_storage_account: stgaccstate101
-#       az_container_name: devcontainer
-#       tf_key: dev
-#       tf_vars_file: dev.tfvars
-#     secrets:
-#       AZURE_AD_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
-#       AZURE_AD_CLIENT_SECRET: ${{secrets.AZURE_AD_CLIENT_SECRET}}
-#       AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-#       AZURE_AD_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
+  plan:
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-plan.yml@feature-branch-27
+    needs: [validate]
+    with:
+      path: terraform_dev
+      tf_version: latest
+      az_resource_group: labresgrp1
+      az_storage_account: stgaccstate101
+      az_container_name: devcontainer
+      tf_key: dev
+      tf_vars_file: dev.tfvars
+      github_environment: dev
+    secrets:
+      AZURE_AD_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
+      AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      AZURE_AD_TENANT_ID: ${{secrets.AZURE_AD_TENANT_ID}}
