@@ -1,4 +1,4 @@
-name: "ew-terraform-dev"
+name: "ew-oidc-intgarte-dev"
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   validate:
-    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-validate.yml@feature-branch-27
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-validate.yml@main
     with:
       path: terraform_dev
       tf_version: latest
@@ -25,7 +25,7 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
     
   plan:
-    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-plan.yml@feature-branch-27
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-oidc-plan.yml@main
     needs: [validate]
     with:
       path: terraform_dev
