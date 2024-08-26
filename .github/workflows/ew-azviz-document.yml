@@ -48,6 +48,8 @@ jobs:
 
     - name: Commit and push generated documentation
       run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
         git add src/output.png
         git commit -m "Added AzViz documentation for resource group(s): mytestrg101"
         git push
