@@ -16,7 +16,7 @@ permissions:
 
 jobs:
  stage-1-Documentation:
-    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-azviz-document.yml@featurebarnch-30
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-azviz-document.yml@main
     with:
      resource_groups: mytestrg101
      github_environment: dev
