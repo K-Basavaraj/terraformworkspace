@@ -38,7 +38,6 @@ module "subnet" {
   resource_group_name  = module.resource_group["mytestrg101"].name
   virtual_network_name = module.vnet["vnet1"].vnet_name
   address_prefixes     = each.value.address_prefixes
-  #delegation           = each.value.delegation
   depends_on = [
     module.vnet
   ]
