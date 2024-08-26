@@ -35,16 +35,19 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: az-viz  
-        
-    - name: Verify artifact download
-      run: ls -alh /home/runner/work/terraformworkspace/terraformworkspace
 
-    - name: Copy file to existing folder
+    - name: Verify downloaded files
+      run: ls -alh /home/runner/work/demoworkspace/demoworkspace  # Check where the artifact is downloaded
+
+    - name: Ensure src directory exists
+      run: mkdir -p src  # Create the src directory if it doesn't exist
+
+    - name: Copy file to src folder
       run: |
-        cp /home/runner/work/terraformworkspace/terraformworkspace/output.png src/output.png  # Use correct path
+        cp /home/runner/work/demoworkspace/demoworkspace/output.png src/output.png  # Ensure the correct path
 
     - name: Commit and push generated documentation
       run: |
-       git add src/output.png
-       git commit -m "Added AzViz documentation for resource group(s): mytestrg101"
-       git push
+        git add src/output.png
+        git commit -m "Added AzViz documentation for resource group(s): mytestrg101"
+        git push
