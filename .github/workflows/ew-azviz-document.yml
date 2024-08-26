@@ -7,9 +7,16 @@ on:
 
   workflow_dispatch:
 
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+  issues: write
+
 jobs:
  stage-1-Documentation:
-    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-azviz-document.yml@main
+    uses: K-Basavaraj/terraformworkspace/.github/workflows/rw-azviz-document.yml@featurebranch-30
     with:
      resource_groups: mytestrg101
      github_environment: dev
