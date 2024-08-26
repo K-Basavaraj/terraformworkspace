@@ -64,18 +64,24 @@ jobs:
         inlineScript: |
           Export-AzViz -ResourceGroup ${{ inputs.resource_groups }} -LabelVerbosity 2 -CategoryDepth 2 -Theme light -Show -OutputFormat png 
         azPSVersion: latest
+        
+     - name: Upload Artefacts
+       uses: actions/upload-artifact@v2
+       with:
+        name: az-viz
+        path: /tmp/output.png
 
-     - name: Commit and push generated documentation
-       run: |
-          mkdir -p ${{ inputs.destination_folder }}
-          cp ./${{ inputs.resource_groups }}.png ${{ inputs.destination_folder }}
-          git add .
-          git commit -m "Added AzViz documentation for resource group(s): ${{ inputs.resource_groups }}"
-          git push
+    #  - name: Commit and push generated documentation
+    #    run: |
+    #       mkdir -p ${{ inputs.destination_folder }}
+    #       cp ./${{ inputs.resource_groups }}.png ${{ inputs.destination_folder }}
+    #       git add .
+    #       git commit -m "Added AzViz documentation for resource group(s): ${{ inputs.resource_groups }}"
+    #       git push
           
-     - name: Notify completion
-       run: |
-         echo "AzViz documentation generated and pushed to the current repository for environment: ${{ inputs.github_environment }}"
+    #  - name: Notify completion
+    #    run: |
+    #      echo "AzViz documentation generated and pushed to the current repository for environment: ${{ inputs.github_environment }}"
         
      
 
